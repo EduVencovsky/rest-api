@@ -7,8 +7,8 @@ const app = express()
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
 
-const lions = [{oi: 'oi'}]
-const id = 0
+const lions = []
+var id = 0
 
 app.get('/lions', (req, res) => {
     res.json(lions)
@@ -20,7 +20,7 @@ app.get('/lions/:id', (req, res) => {
 })
 
 app.post('/lions', (req, res) =>  {
-    const lion = req.body
+    let lion = req.body
     id++ 
     lion.id = id.toString()
     lions.push(lion)
@@ -37,7 +37,7 @@ app.put('/lions/:id', (req, res) => {
     if(!lions[lion]){
         res.send()
     } else {
-        let updatedLion = _.assign(lions[lion], update)
+        const updatedLion = _.assign(lions[lion], update)
         res.json(updatedLion)
     }
 })
