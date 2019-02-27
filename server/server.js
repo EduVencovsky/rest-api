@@ -23,6 +23,3 @@ app.use((error, req, res, next) => {
 })
 
 module.exports = app
-
-// const port = 3000
-// app.listen(port, () => console.log(`Listem on port ${port}`))

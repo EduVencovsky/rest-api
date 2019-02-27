@@ -27,14 +27,14 @@ lionRouter.route('/')
     .post(updateId, (req, res) =>  {
         let lion = req.body
         lions.push(lion)
-        res.json(lion)
+        res.status(201).json(lion)
     })
 
 lionRouter.route('/:id')
     .get((req, res) => {
         res.json(req.lion)
     })
-    .put(updateId, (req, res) => {
+    .put((req, res) => {
         let update = req.body
     
         if(update.id) delete update.id
