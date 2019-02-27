@@ -1,57 +1,28 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const _ = require('lodash')
+const morgan = require('morgan')
+
+const lionRouter = require('./lion')
+const tigerRouter = require('./tigers')
 
 const app = express()
 
+app.use(morgan('dev'))
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
 
-const lions = []
-var id = 0
+app.use('/lions', lionRouter)
+app.use('/tigers', tigerRouter)
 
-app.get('/lions', (req, res) => {
-    res.json(lions)
-})
-
-app.get('/lions/:id', (req, res) => {
-    const lion = _.find(lions, { id: req.params.id })
-    res.json(lion || {})
-})
-
-app.post('/lions', (req, res) =>  {
-    let lion = req.body
-    id++ 
-    lion.id = id.toString()
-    lions.push(lion)
-    res.json(lion)
-})
-
-app.put('/lions/:id', (req, res) => {
-    let update = req.body
-
-    if(update.id) delete update.id
-
-    const lion = _.findIndex(lions, { id: req.params.id })
-
-    if(!lions[lion]){
-        res.send()
-    } else {
-        const updatedLion = _.assign(lions[lion], update)
-        res.json(updatedLion)
+app.use((error, req, res, next) => {
+    if(error){
+        console.log('Error' + error.message)
+        res.status(500).send(error)
     }
 })
 
-app.delete('/lions/:id', (req, res) => {
-    const lion = _.findIndex(lions, { id: req.params.id })
-    if(!lions[lion]){
-        res.send()
-    } else {
-        const deletedLion = lions[lion] 
-        lions.splice(lion, 1)
-        res.json(deletedLion)
-    }
-})
+module.exports = app
 
-const port = 3000
-app.listen(port, () => console.log(`Listem on port ${port}`))
+// const port = 3000
+// app.listen(port, () => console.log(`Listem on port ${port}`))
