@@ -6,8 +6,7 @@ exports.params = (req, res, next, id) => {
         .then(category => {
             if(!category){
                 next(new Error('No category with id ' + id))
-            }
-            else {
+            } else {
                 req.category = category
                 next()
             }
@@ -32,6 +31,19 @@ exports.put = (req, res, next) => {
     category.save((error, savedCategory) => error ? next(error) : res.json(savedCategory))
 }
 
+exports.post = (req, res, next) => {
+    let newCategory = req.body
+    Category.create(newCategory)
+        .then(category => res.json(category))
+        .catch(error => next(error))
+}
+
 exports.delete = (req, res, next) => {
-    
+    req.category.remove((error, removed) => {
+        if(error){
+            next(error)
+        } else {
+            res.json(removed)
+        }
+    })
 }
