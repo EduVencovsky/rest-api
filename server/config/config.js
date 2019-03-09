@@ -2,7 +2,7 @@ const _ = require('lodash')
 
 let config = {
     dev: 'development',
-    test: 'testing', 
+    test: 'testing',
     prod: 'production',
     port: process.env.PORT || 3000
 }
@@ -17,6 +17,5 @@ try {
 } catch (e) {
     envConfig = {}
 }
-
 
 module.exports = _.merge(config, envConfig)

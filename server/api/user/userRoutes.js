@@ -1,9 +1,16 @@
 const router = require('express').Router()
-const logger = require('../../util/logger')
+const controller = require('./userController')
 
-router.get('/', (req, res) => {
-    logger.log({ok: true})
-    res.send({ok: true})
-})
+router.param('id', controller.params)
+
+router.route('/')
+    .get(controller.get)
+    .post(controller.post)
+
+router.route('/:id')
+    .get(controller.getOne)
+    .put(controller.put)
+    .delete(controller.delete)
 
 module.exports = router
+

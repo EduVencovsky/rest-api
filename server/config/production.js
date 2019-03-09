@@ -1,4 +1,7 @@
-const envConfig = {}
-
+const envConfig = {
+    db: {
+        url: ''
+    },
+}
 
 module.exports = envConfig

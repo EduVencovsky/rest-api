@@ -24,7 +24,7 @@ exports.get = (req, res, next) => {
         .catch(error => next(error))
 }
 
-exports.getOne = (req, res, next) => {
+exports.getOne = (req, res) => {
     res.json(req.post)
 }
 
