@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const api = require('./api')
+const auth = require('./auth/routes')
 const config = require('./config/config')
 
 // connect to mongodb
@@ -11,5 +12,8 @@ require('./middleware/appMiddleware')(app)
 
 // setup api router
 app.use('/api', api)
+
+// setup auth router
+app.use('/auth', auth)
 
 module.exports = app
